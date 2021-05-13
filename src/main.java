@@ -5,47 +5,57 @@ import java.util.List;
 public class main {
 
 	public static void main(String[] args) {
+		// POS1: 4,50,5,8,48,23,21,41,50, 1
+		// POS2: 28,58,49,29,14,17,53,59,42, 2
+		// POS3: 52,10,36,55,19,16,42,3,1, 0
 		// TODO Auto-generated method stub
-		int weightRelease[] = { 5, 10, 15, 20, 30, 30, 20, 50, 10, 20 };
-		int pos = 0;
-		FirstFound(weightRelease, pos);
+		int weightRelease[] = { 751,218,657,265,584,707,428,582,693,642,799,445,449,300,758,688,222,252,475,444,327,384,296,734,669,378,736,616,762,593,202,323,630,294,340,752,408,587,522,419,330,520,343,718,292,564,332,687,553,363,523,400,481,251,497,377,683,437,391,543 };
+		int l_pos[] = { 52,10,36,55,19,16,42,3,1, 0};
+		System.out.println("First Found:");
+		FirstFound(weightRelease, l_pos);
+		
 		System.out.println("");
-		System.out.println("");
-		steepestAscent(weightRelease, pos);
+		System.out.println("Steepest Ascent:");
+		steepestAscent(weightRelease, l_pos);
 	}
 	
-	public static void steepestAscent(int[] weightRelease, int pos) {
+	public static void steepestAscent(int[] weightRelease, int[] l_pos) {
 		int solucao = weightRelease[0];
 		int[] foundedSolution = new int[]{};
-		for(int i = pos; i < weightRelease.length; i++) {
-			if (weightRelease[i] >= solucao) {
-				solucao = weightRelease[i];
-				foundedSolution = push(foundedSolution, solucao);
+		int sum = 0;
+		for(int i = 0; i < l_pos.length; i++){
+			int pos = l_pos[i];
+			for(int j = pos; j < weightRelease.length; j++) {
+				if (weightRelease[j] >= solucao) {
+					solucao = weightRelease[j];
+					foundedSolution = push(foundedSolution, solucao);
+				}
 			}
+			//System.out.println("NOVO First Found - Solução encontrada:" + solucao);
+			sum = sum + solucao;
+			solucao = weightRelease[0];
 		}
-		
-		System.out.println("Steepest Ascent - Solução encontrada:");
-		for(int i = foundedSolution.length - 1; i > -1; i--) {
-			System.out.print(foundedSolution[i] + ", ");
-		}
+		System.out.println("Soma: " + sum);
 	}
 	
-	public static void FirstFound(int[] weightRelease, int pos) {
+	public static void FirstFound(int[] weightRelease, int[] l_pos) {
 		int solucao = weightRelease[0];
 		int[] foundedSolution = new int[]{};
-		
-		for(int i = pos; i < weightRelease.length; i++) {
-			if (weightRelease[i] >= solucao) {
-				solucao = weightRelease[i];
-				foundedSolution = push(foundedSolution, solucao);
+		int sum = 0;
+		for(int i = 0; i < l_pos.length; i++){
+			int pos = l_pos[i];
+			for(int j = pos; j < weightRelease.length; j++) {
+				if (weightRelease[j] >= solucao) {
+					solucao = weightRelease[j];
+					foundedSolution = push(foundedSolution, solucao);
+				}
+				else break;
 			}
-			else break;
+			//System.out.println("NOVO First Found - Solução encontrada:" + solucao);
+			sum = sum + solucao;
+			solucao = weightRelease[0];
 		}
-		
-		System.out.println("First Found - Solução encontrada:");
-		for(int i = foundedSolution.length - 1; i > -1; i--) {
-			System.out.print(foundedSolution[i] + ", ");
-		}
+		System.out.println("Soma: " + sum);
 	}
 	
 	public static int[] push(int[] arr, int item) {
